@@ -1,5 +1,3 @@
-# TODO: modularise code for common functions between the hash functions eg. placing of keys in position
-
 # Quadratic hashing function
 def hash_quadratic(keys):
     MAX_ITERATIONS = 1000 # Define max attempts before giving up
