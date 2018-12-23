@@ -8,7 +8,21 @@ def count_ephemeral(n_1, n_2, k):
         path = [c]
         brk = False
         next = c
-         
+        while not brk:
+            next = get_child(next, k)
+            if next in good or next in bad or next == 1 or next in path: # THIS LINE IS FUCKED
+                remove, remove_count = get_similar(path, n_2)
+                candidates = [n for n in candidates if not n in remove]
+                brk = True
+                if next in good or next == 1:
+                    print(c,"is ephemeral.")
+                    count += remove_count
+                    good = good + remove
+                else:
+                    print(c,"is eternal")
+                    bad = bad + remove
+            else:
+                path.append(next)
     return count
 
 def get_child(n, k):
@@ -31,26 +45,26 @@ def get_similar(path, max):
 def permutate(string, left, right, p=[]):
     if type(string) == str:
         string = list(string)
-
-    if left == right:
+    if right == 0:
+        p.append(int(''.join(string)))
+    elif left == right:
         return int(''.join(string))
     else:
         for _ in range(left, right + 1):
             string[left], string[_] = string[_], string[left]
             p.append(permutate(string, left + 1, right, p))
             string[left], string[_] = string[_], string[left]
-
     return p
 
 ########################################################################################################################
 import time
 s_time = time.time()
-
+count_ephemeral(1, 20, 2)
 e_time = time.time()
 
-path = [9876543, 156425, 6232, 1342, 100]
+#path = [1, 123]
 
-print(get_similar(path, 10000000))
+#print(get_similar(path, 10000000))
 
 #path = list(map(str, path))
 
