@@ -1,29 +1,26 @@
 def count_ephemeral(n_1, n_2, k):
-    candidates = list(range(n_1, n_2))
-    count = 0
-    good = []
-    bad = []
-    while len(candidates) > 0:
-        c = candidates[0]
-        path = [c]
-        brk = False
-        next = c
-        while not brk:
-            next = get_child(next, k)
-            if next in good or next in bad or next == 1 or next in path: # THIS LINE IS FUCKED
-                remove, remove_count = get_similar(path, n_2)
-                candidates = [n for n in candidates if not n in remove]
-                brk = True
-                if next in good or next == 1:
-                    print(c,"is ephemeral.")
-                    count += remove_count
-                    good = good + remove
-                else:
-                    print(c,"is eternal")
-                    bad = bad + remove
+    candidates = range(n_1, n_2)
+    good, bad = [], []
+
+    for c in reversed(candidates):
+        if not (c in good or c in bad):
+            path, eph = r_eph(c, k, good, bad, [c])
+            remove, _ = get_similar(path, n_2, n_1)
+            if eph:
+                good = list(set(good + remove))
             else:
-                path.append(next)
-    return count
+                bad = list(set(bad + remove))
+    return len(good)
+
+def r_eph(c, k, good, bad, path):
+    next = get_child(c, k)
+    if next == 1 or next in good:
+        return path, True
+    elif next in path or next in bad:
+        return path, False
+    else:
+        path.append(next)
+        return r_eph(next, k, good, bad, path)
 
 def get_child(n, k):
     sum = 0
@@ -31,17 +28,16 @@ def get_child(n, k):
         sum += (n // (10**base)) ** k
         n = n % (10**base)
     return sum + n**k
-
-def get_similar(path, max):
-    path = list(map(str, path))
+def get_similar(path, max, min):
+    path = list(map(str, [n for n in path]))
+    _p = []
     for p in path:
-        _p = permutate(p, 0, len(p) - 1)
-        _p = [n for n in _p if type(n) == int]
+        _p = permutate(p, 0, len(p) - 1, _p)
+        _p = [n for n in _p if type(n) == int and n < max]
 
-    lists = list(map(lambda n : [n * 10**x for x in range(7) if n * 10**x < max], _p))
-    out = [i for _ in lists for i in _]
+    lists = list(map(lambda n : [n * 10**x for x in range(7) if n * 10**x < max and n * 10**x >= min], _p))
+    out = list(set([i for _ in lists for i in _]))
     return out, len(out)
-
 def permutate(string, left, right, p=[]):
     if type(string) == str:
         string = list(string)
@@ -55,20 +51,9 @@ def permutate(string, left, right, p=[]):
             p.append(permutate(string, left + 1, right, p))
             string[left], string[_] = string[_], string[left]
     return p
-
 ########################################################################################################################
 import time
 s_time = time.time()
-count_ephemeral(1, 20, 2)
+print(count_ephemeral(1, 1000, 2))
 e_time = time.time()
-
-#path = [1, 123]
-
-#print(get_similar(path, 10000000))
-
-#path = list(map(str, path))
-
-#for p in path:
-#    _p = permutate(p, 0, len(p) - 1)
-#    _p = [n for n in _p if type(n) == int]
-#print(_p)
+print(e_time - s_time)
