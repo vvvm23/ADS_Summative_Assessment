@@ -1,26 +1,28 @@
 def count_ephemeral(n_1, n_2, k):
     candidates = range(n_1, n_2)
-    good, bad = [], []
+    good = {}
 
     for c in reversed(candidates):
-        if not (c in good or c in bad):
-            path, eph = r_eph(c, k, good, bad, [c])
+        if not (c in good):
+            path, eph = r_eph(c, k, good, [c])
             remove, _ = get_similar(path, n_2, n_1)
             if eph:
-                good = list(set(good + remove))
+                good.update({r: True for r in remove})
             else:
-                bad = list(set(bad + remove))
-    return len(good)
+                good.update({r: False for r in remove})
+    return sum(v == True for v in good.values())
 
-def r_eph(c, k, good, bad, path):
+def r_eph(c, k, good, path):
     next = get_child(c, k)
-    if next == 1 or next in good:
+    if next == 1:
         return path, True
-    elif next in path or next in bad:
+    elif next in good:
+        return path, good[next]
+    elif next in path:
         return path, False
     else:
         path.append(next)
-        return r_eph(next, k, good, bad, path)
+        return r_eph(next, k, good, path)
 
 def get_child(n, k):
     sum = 0
@@ -54,6 +56,6 @@ def permutate(string, left, right, p=[]):
 ########################################################################################################################
 import time
 s_time = time.time()
-print(count_ephemeral(1, 1000, 2))
+print(count_ephemeral(1, 10000000, 2))
 e_time = time.time()
 print(e_time - s_time)
