@@ -1,0 +1,41 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[latin1]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\title{Algorithms and Data Structures Summative - Question4}
+\begin{document}
+	\underline{a:}\\ 	
+	If $2x^4$ is $O(x^3 + 3x + 2)$ then $2x^4 \leq C*(x^3 + 3x + 2)$ for all $x \geq k$\\	
+	$x^3 + 3x + 2 \leq x^3 + 3x^3 + 2x^3$\\	
+	$x^3 + 3x + 2 \leq 6x^3$\\	
+	Therefore:\\	
+	$2x^4 \leq C(x^3 + 3x + 2) \leq C * 6x^3$\\
+	$2x^4 \leq C *6x^3$ No C where this inequality is true so no witnesses to statement.\\ 	
+	Therefore statement is false.\\
+	
+	\underline{b:} \\
+	If $4x^3 + 2x^2\log(x) + 1$ is $O(x^3)$ then $4x^3 + 2x^2\log(x) + 1 \leq C*x^3$ for all $x \geq k$ \\
+	$4x^3 + 2x^2\log(x) + 1 \leq 4x^3 + 2x^3 + x^3$\\
+	$4x^3 + 2x^2\log(x) + 1 \leq 7x^3$\\
+	Therefore:\\
+	$4x^3 + 2x^2\log(x) + 1 \leq 7x^3 \leq Cx^3$ Inequality true at $C=7$, $k=1$\\
+	Therefore statement is true.\\
+	
+	\underline{c:}\\
+	If $3x^2 + 7x + 1$ is $\omega (x\log(x))$ then $3x^2 + 7x + 1 > C*x\log(x)$ for all $x \geq k$\\
+	$3x^2 + 7x + 1 > C*x^2 > C*x\log(x)$\\
+	$3x^2 + 7x + 1 > 3x^2 \geq C*x^2 > C*x\log(x)$\\
+	Therefore, statement true with witnesses $C=3$, $k=1$\\
+	
+	\underline{d:}\\
+	If $x^2 + 4x$ is $\Omega(x\log(x))$ then $x^2 + 4x \geq C*x\log(x)$ for all $x \geq k$ \\
+	$x^2 + 4x \geq C*x^2 > C*x\log(x)$\\
+	$x^2 + 4x > x^2 \geq C*x^2 > C*x\log(x)$\\
+	Therefore, statement true with witnesses $C=1$, $k=1$\\
+	
+	\underline{e:}\\
+	
+	
+\end{document}
