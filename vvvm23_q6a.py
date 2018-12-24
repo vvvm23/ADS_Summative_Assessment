@@ -2,7 +2,7 @@ def merge_sort_hybrid(l):
     if len(l) <= 4:
         return selection_sort(l)
 
-    mid = int(len(l) / 2)
+    mid = len(l) // 2
     left = merge_sort_hybrid(l[:mid])
     right = merge_sort_hybrid(l[mid:])
 
@@ -38,13 +38,3 @@ def selection_sort(l):
         l[i], l[pos] = l[pos], l[i]
 
     return l
-
-##############################################################################################
-import time
-
-a_list = [_ for _ in range(1, 2**10 + 1)]
-
-s_time = time.time()
-merge_sort_hybrid(a_list)
-e_time = time.time()
-print(e_time - s_time)
