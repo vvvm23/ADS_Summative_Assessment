@@ -7,7 +7,9 @@ def count_ephemeral(n_1, n_2, k):
         c = c - 1 # Decrement candidate
         if not (c in good): # If candidate has already been discovered skip it.
             path, eph = r_eph(c, k, good, [c]) # Get path to terminating value and whether c is ephemeral or eternal
-            good.update({p: eph for p in path}) # Update dictionary
+            if len(path) > 2:
+                path = get_similar(path, n_2, n_1)
+            good.update({p: eph for p in path if p >= n_1 and p < n_2}) # Update dictionary
 
     return sum(v == True for v in good.values()) # Count all True values in dictionary and return.
 
@@ -33,22 +35,16 @@ def get_child(n, k):
     return total + n**k
 
 # Function to get all permutations of all items in path
-# Was trying to be fancy and not only eliminate all items in path put also all permutations
-# of these items as they will evaluate to the same value. This did not lead to much time
-# increase.
-'''def get_similar(path, max, min):
+def get_similar(path, max, min):
     path = list(map(lambda p : list(str(p)), path)) # Convert all integers in path to strings
     _p = []
     for p in path: # Iterate through all integers in path
         _p = permutate(p, 0, len(p) - 1, _p) # Get permutations of current integer
         _p = [n for n in _p if type(n) == int and n >= min and n < max] # Check if within bounds and remove self-identifying lists from within list
-    return _p'''
+    return _p
     
 # Function to get permutations of a string
-# Was trying to be fancy and not only eliminate all items in path put also all permutations
-# of these items as they will evaluate to the same value. This did not lead to much time
-# increase.
-'''def permutate(string, left, right, p=[]):
+def permutate(string, left, right, p=[]):
     if right == 0: # If one digit integer simply append
         p.append(int(''.join(string)))
     elif left == right: # Base case
@@ -58,10 +54,4 @@ def get_child(n, k):
             string[left], string[_] = string[_], string[left] # Swap
             p.append(permutate(string, left + 1, right, p)) # Call permutate recursively and append.
             string[left], string[_] = string[_], string[left] # Swap
-    return p'''
-
-import time
-s_time = time.time()
-print(count_ephemeral(1, 10**7, 4))
-e_time = time.time()
-print(e_time - s_time)
+    return p
