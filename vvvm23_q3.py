@@ -1,8 +1,7 @@
 def good_expression(expression):
     good = True
     
-    ''' 
-        Some rules:
+    ''' Some rules:
         If the expression contains no brackets it is good.
         If the expression is entirely encompassed in brackets it is not good
         If part of the expression is encompasses in bracket and only contains
@@ -12,6 +11,21 @@ def good_expression(expression):
         If part of an expression is encompasses in brackets and contains only
         ..addition and is also surrounded in addition operators then it is
         ..not good. [IS THIS REDUNDANT?]
+    '''
+
+    ''' Better ruleset
+        Check these rules recursively every time an open bracket is encountered:
+        If expression entirely encompasses in brackets then not good
+        If entirely consists of multiplication then it is not good
+        ..except for highest level
+        If expression is surrounded in addition operators or nothing then it is not good.
+        ..except for highest level.
+        If any of these rules are triggered ignore everything else and return false
+        ..at highest level.
+    '''
+
+    ''' Implementation Plan
+
     '''
     return good
 
