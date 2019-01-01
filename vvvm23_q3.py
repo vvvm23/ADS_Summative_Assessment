@@ -1,6 +1,6 @@
 def good_expression(expression):
 
-    ''' Better ruleset
+    ''' Ruleset
         Check these rules recursively every time an open bracket is encountered:
         If expression entirely encompasses in brackets then not good
         If entirely consists of multiplication then it is not good
@@ -11,46 +11,47 @@ def good_expression(expression):
         ..at highest level.
     '''
 
-    expression_stack = Stack()
-    object_stack = Stack()
+    expression_stack = Stack() # Stack to store expression as it is read through so previous character can be read
+    object_stack = Stack() # Stores Expression objects so most recent expression can be popped when ) met
 
-    for c in expression:
+    for c in expression: # Iterate through every character in expression
         if not expression_stack.isEmpty():
-            if expression_stack.top() == ')':
-                _e = object_stack.pop()
+            if expression_stack.top() == ')': # Check if top of stack is end of an expression
+                _e = object_stack.pop() #..if so pop from stack
                 _e.after = c
                 if _e.after in ['', '+', '(', ')'] and _e.before in ['', '+', '(', ')']:
-                    return False
+                    return False # If before and after character of a stack is not multiply then return false
                 elif not _e.contains_add:
-                    return False
+                    return False # If expression only contained multiplication return false
 
-        if c == '(':
-            object_stack.push(Expression())
+        if c == '(': # Check if current character is start of expression
+            object_stack.push(Expression()) #..if so push new expression object to stack
             if expression_stack.isEmpty():
-                _e = object_stack.pop()
+                _e = object_stack.pop() # if first character set expression.before to nothing
                 _e.before = ''
                 object_stack.push(_e)
             else:
-                _e = object_stack.pop()
+                _e = object_stack.pop() # else, set expression.before to top of expression stack
                 _e.before = expression_stack.top()
                 object_stack.push(_e)
 
-        if c == '+' and not object_stack.isEmpty():
+        if c == '+' and not object_stack.isEmpty(): # if current character is + and not on top level
             _e = object_stack.pop()
-            _e.contains_add = True
+            _e.contains_add = True # set expression.contains_add to true
             object_stack.push(_e)
 
-        expression_stack.push(c)
+        expression_stack.push(c) # push current character to expression stack
 
+    # at end of loop check if last character was )
     if expression_stack.top() == ')':
         _e = object_stack.pop()
         _e.after = ''
-        if _e.after in ['', '+', '(', ')'] and _e.before in ['', '+', '(', ')']:
-            return False
-        elif not _e.contains_add:
-            return False
+        if _e.after in ['', '+', '(', ')'] and _e.before in ['', '+', '(', ')']: # if before and after was not multiply
+            return False # ..return false
+        elif not _e.contains_add: # if expression only contains multiplication
+            return False #..return false.
 
-    return True
+    return True # if does not trigger any rules in ruleset return true.
 
 class Expression:
     def __init__(self):
@@ -113,5 +114,8 @@ assert not good_expression("(((2+3)*(4+3*(3*2+34))))")
 assert good_expression("(2+3)*(1+7)*(1+4)*(2+3)*(1+7)*(1+4)*(2+3)*(1+7)*(1+4)*(2+3)*(1+7)*(1+4)*(2+3)*(1+7)*(1+4)*(2+3)*(1+7)*(1+4)")
 assert not good_expression("((2+3)*(1+7)*(1+4)*(2+3)*(1+7)*(1+4)*(2+3)*(1+7)*(1+4)*(2+3)*(1+7)*(1+4)*(2+3)*(1+7)*(1+4)*(2+3)*(1+7)*(1+4))")
 assert good_expression("(3+2)*1")
+assert good_expression("3*2*1")
+assert not good_expression("(3*2*1)")
+
 
 print ("all tests passed\n")
