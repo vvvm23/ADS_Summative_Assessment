@@ -27,8 +27,10 @@ def good_expression(expression):
     expression_index = -1
     expression_list = []
     take_after = False
+    c_index = 0
 
     for c in expression:
+        c_index += 1
         if c == '(':
             expression_list.append(Expression())
             expression_level += 1
@@ -45,18 +47,22 @@ def good_expression(expression):
             expression_list[expression_index].after = expression_stack.top()
             take_after = False
             if expression_list[expression_index].before in ['', '+', '(', ')'] and expression_list[expression_index].after in ['', '+', '(', ')']:
+                print("Terminating due to surrounded in nothing or +")
                 return False
 
-        if c == ')':
+        if expression_stack.top() == ')':
             if not expression_list[expression_index].contains_add:
+                print("Terminating due to expression containing only multiplication.")
                 return False
 
             take_after = True
-            if c == expression[-1] and expression_list[expression_index].before in ['', '+']:
+            if c_index == len(expression) and expression_list[expression_index].before in ['', '+', '(', ')']:
+                print("Terminating due to last character being ) and preceding expression is + or nothing")
                 return False
 
             expression_level -= 1
 
+    print("Expression is good")
     return True
 
 class Expression:
@@ -114,4 +120,5 @@ assert good_expression("1+2*3+4")
 assert not good_expression("1+(2*3)+4")
 assert good_expression("1*2+3+4")
 assert not good_expression("1*2+(3+4)")
+assert good_expression("(2+3)*(4+3*(3*2+34))")
 print ("all tests passed\n")
