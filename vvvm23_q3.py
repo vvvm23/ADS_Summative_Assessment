@@ -11,58 +11,45 @@ def good_expression(expression):
         ..at highest level.
     '''
 
-    ''' Implementation Plan
-            
-    '''
-    # Ideally don't have these two expressions
-    '''if not ('(' in expression or ')' in expression):
-        return True
-    if expression[0] == '(' and expression[-1] == ')':
-        return False
-    if not ('+' in expression):
-        return False'''
-
     expression_stack = Stack()
-    expression_level = 0
-    expression_index = -1
-    expression_list = []
-    take_after = False
-    c_index = 0
+    object_stack = Stack()
 
     for c in expression:
-        c_index += 1
+        if not expression_stack.isEmpty():
+            if expression_stack.top() == ')':
+                _e = object_stack.pop()
+                _e.after = c
+                if _e.after in ['', '+', '(', ')'] and _e.before in ['', '+', '(', ')']:
+                    return False
+                elif not _e.contains_add:
+                    return False
+
         if c == '(':
-            expression_list.append(Expression())
-            expression_level += 1
-            expression_index += 1
+            object_stack.push(Expression())
             if expression_stack.isEmpty():
-                expression_list[expression_index].before = ''
+                _e = object_stack.pop()
+                _e.before = ''
+                object_stack.push(_e)
             else:
-                expression_list[expression_index].before = expression_stack.top()
-        if c == '+' and expression_level > 0:
-            expression_list[expression_index].contains_add = True
+                _e = object_stack.pop()
+                _e.before = expression_stack.top()
+                object_stack.push(_e)
+
+        if c == '+' and not object_stack.isEmpty():
+            _e = object_stack.pop()
+            _e.contains_add = True
+            object_stack.push(_e)
 
         expression_stack.push(c)
-        if take_after:
-            expression_list[expression_index].after = expression_stack.top()
-            take_after = False
-            if expression_list[expression_index].before in ['', '+', '(', ')'] and expression_list[expression_index].after in ['', '+', '(', ')']:
-                print("Terminating due to surrounded in nothing or +")
-                return False
 
-        if expression_stack.top() == ')':
-            if not expression_list[expression_index].contains_add:
-                print("Terminating due to expression containing only multiplication.")
-                return False
+    if expression_stack.top() == ')':
+        _e = object_stack.pop()
+        _e.after = ''
+        if _e.after in ['', '+', '(', ')'] and _e.before in ['', '+', '(', ')']:
+            return False
+        elif not _e.contains_add:
+            return False
 
-            take_after = True
-            if c_index == len(expression) and expression_list[expression_index].before in ['', '+', '(', ')']:
-                print("Terminating due to last character being ) and preceding expression is + or nothing")
-                return False
-
-            expression_level -= 1
-
-    print("Expression is good")
     return True
 
 class Expression:
@@ -121,4 +108,10 @@ assert not good_expression("1+(2*3)+4")
 assert good_expression("1*2+3+4")
 assert not good_expression("1*2+(3+4)")
 assert good_expression("(2+3)*(4+3*(3*2+34))")
+assert not good_expression("((2+3)*(4+3*(3*2+34)))")
+assert not good_expression("(((2+3)*(4+3*(3*2+34))))")
+assert good_expression("(2+3)*(1+7)*(1+4)*(2+3)*(1+7)*(1+4)*(2+3)*(1+7)*(1+4)*(2+3)*(1+7)*(1+4)*(2+3)*(1+7)*(1+4)*(2+3)*(1+7)*(1+4)")
+assert not good_expression("((2+3)*(1+7)*(1+4)*(2+3)*(1+7)*(1+4)*(2+3)*(1+7)*(1+4)*(2+3)*(1+7)*(1+4)*(2+3)*(1+7)*(1+4)*(2+3)*(1+7)*(1+4))")
+assert good_expression("(3+2)*1")
+
 print ("all tests passed\n")
