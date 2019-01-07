@@ -79,27 +79,9 @@ class Stack:
     def top(self):
         return self.head.data
 
-class Queue:
-    def __init__(self):
-        self.front = None
-        self.rear = None
-    def isEmpty(self):
-        return self.front == None
-    def dequeue(self):
-        output = self.front.data
-        self.front = self.front.after
-        if self.front == None:
-            self.rear = None
-        return output
-    def enqueue(self, data):
-        if self.rear == None:
-            self.front = Node(data)
-            self.rear = self.front
-        else:
-            self.rear.after = Node(data, self.rear)
-            self.rear = self.rear.after
-
 ########################################################################################################################
+import time
+s_time = time.time()
 assert good_expression("1+2+3+4")
 assert not good_expression("(1+2+3+4)")
 assert good_expression("(1+2)*3+4")
@@ -116,6 +98,7 @@ assert not good_expression("((2+3)*(1+7)*(1+4)*(2+3)*(1+7)*(1+4)*(2+3)*(1+7)*(1+
 assert good_expression("(3+2)*1")
 assert good_expression("3*2*1")
 assert not good_expression("(3*2*1)")
+assert not good_expression("1+(2*(3+(4*(5+(6*(7+(8*(9+(9+1)))))))))")
+t_time = time.time() - s_time
 
-
-print ("all tests passed\n")
+print("all tests passed in", t_time, "\n")
