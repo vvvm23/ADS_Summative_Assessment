@@ -5,16 +5,14 @@ def count_ephemeral(n_1, n_2, k):
     base_dictionary.update({b: 10**b for b in range(10)})
     good = {} # Create empty dictionary of values that have been explored
     c = n_2 # Get initial candidate value
-
+    
     while c > n_1: # While candidate is more than min
         c = c - 1 # Decrement candidate
         if not (c in good): # If candidate has already been discovered skip it.
             path, eph = r_eph(c, k, good, [c]) # Get path to terminating value and whether c is ephemeral or eternal
-            #if len(path) > 2:
-                #path = get_similar(path, n_2, n_1)
-            good.update({p: eph for p in path if p >= n_1 and p < n_2}) # Update dictionary
+            good.update({p: eph for p in path}) # Update dictionary
 
-    return sum(v == True for v in good.values()) # Count all True values in dictionary and return.
+    return sum(good[k] == True for k in good.keys() if k >= n_1 and k < n_2)
 
 # Recursive function
 def r_eph(c, k, good, path):
