@@ -9,9 +9,11 @@ def merge_sort_hybrid(l):
     return merge(left, right)
 
 def merge(left, right):
+    count = 0
     out = []
     while len(left) > 0 or len(right) > 0:
         if len(left) > 0 and len(right) > 0:
+            count += 1
             if left[0] <= right[0]:
                 out.append(left[0])
                 left = left[1:]
@@ -38,3 +40,22 @@ def selection_sort(l):
         l[i], l[pos] = l[pos], l[i]
 
     return l
+
+##################################################################################################################################
+import time
+
+X = [2*n for n in range(2**10)]
+X = X + [2*n + 1 for n in range(2**10)]
+
+s_time = time.time()
+for _ in range(1000):
+    merge_sort_hybrid(X)
+e_time = time.time()
+print((e_time - s_time)/1000)
+
+X = [n for n in range(2**11)]
+s_time = time.time()
+for _ in range(1000):
+    merge_sort_hybrid(X)
+e_time = time.time()
+print((e_time - s_time)/1000)
