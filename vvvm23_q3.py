@@ -102,4 +102,4 @@ assert not good_expression("1+(2*(3+(4*(5+(6*(7+(8*(9+(9+1)))))))))")
 assert good_expression("1*(2+3)*(4+5)*(6+7)")
 t_time = time.time() - s_time
 
-print("all tests passed in", t_time, "\n")
+print("all tests passed in", t_time)

@@ -33,7 +33,7 @@ def get_child(n, k):
     for base in range(7, 0, -1):
         total += power_dictionary[(n//base_dictionary[base])]
         n = n % base_dictionary[base]
-    return total + n**k
+    return total + power_dictionary[n]
 
 '''
     All permutations of a ephermeral number are also ephermeral. Likewise with eternal numbers.
