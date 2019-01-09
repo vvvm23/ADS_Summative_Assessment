@@ -8,13 +8,13 @@
 \begin{document}
 	\underline{a:}\\
 	$T(n) = 9T(n/3) + n^2$ so $a=9$, $b=3$ and $f(n) = n^2$\\
-	Is $n^2 = \Theta(n^{\log_3(9)})$?\\
+	Is $n^2 = \Theta(n^{\log_3(9)})$? [Rule 2]\\
 	Is $n^2 = \Theta(n^{2})$? True.\\
 	$\therefore T(n) = \Theta(n^2\log n)$\\
 	
 	\underline{b:}\\
 	$T(n) = 4T(n/2) + 100n$ so $a=4$, $b=2$ and $f(n) = 100n$\\
-	Is $100n = O(n^{\log_2(4) - \epsilon})$?\\
+	Is $100n = O(n^{\log_2(4) - \epsilon})$? [Rule 1]\\
 	Is $100n = O(n^{2 - \epsilon)}$? True.\\
 	$\therefore T(n) = \Theta(n^2)$\\
 	
@@ -25,15 +25,15 @@
 	\underline{d:}\\
 	$T(n) = 3T(n/3) + cn$ so $a=3$, $b=3$ and $f(n) = cn$\\
 	Assuming c is constant term then Master Theorem can be applied.\\
-	Is $cn = \Theta(n^{\log_3(3)})$?\\
+	Is $cn = \Theta(n^{\log_3(3)})$? [Rule 2]\\
 	Is $cn = \Theta(n)$? True.\\
 	$\therefore T(n) = \Theta(n\log n)$\\
 	
 	\underline{e:}\\
 	$T(n) = 0.99T(n/7) + 1/(n^2)$ so $a=0.99$, $b=7$ and $f(n) = 1/(n^2) = n^{-2}$\\
-	Is $n^{-2} = \Omega(n^{\log_7(0.99) + \epsilon})$?\\
+	Is $n^{-2} = \Omega(n^{\log_7(0.99) + \epsilon})$? [Rule 3]\\
 	Is $n^{-2} \approx \Omega(n^{-0.005 + \epsilon})$? False.\\
 	\\
-	Is $n^{-2} = O(n^{\log_7(0.99) - \epsilon})$? True.\\
+	Is $n^{-2} = O(n^{\log_7(0.99) - \epsilon})$? [Rule 1] True.\\
 	$\therefore T(n) = \Theta(n^{log_7(0.99)})$
 \end{document}
