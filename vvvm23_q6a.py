@@ -40,22 +40,3 @@ def selection_sort(l):
         l[i], l[pos] = l[pos], l[i]
 
     return l
-
-##################################################################################################################################
-import time
-
-X = [2*n for n in range(2**10)]
-X = X + [2*n + 1 for n in range(2**10)]
-
-s_time = time.time()
-for _ in range(1000):
-    merge_sort_hybrid(X)
-e_time = time.time()
-print((e_time - s_time)/1000)
-
-X = [n for n in range(2**11)]
-s_time = time.time()
-for _ in range(1000):
-    merge_sort_hybrid(X)
-e_time = time.time()
-print((e_time - s_time)/1000)

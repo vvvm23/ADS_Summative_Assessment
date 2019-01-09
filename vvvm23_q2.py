@@ -1,6 +1,7 @@
-power_dictionary, base_dictionary = {}, {}
+power_dictionary, base_dictionary = {}, {} # Contains calculate powers of k from 0 to 9 and powers of 10 from 0 to 7
 # Main function
 def count_ephemeral(n_1, n_2, k):
+    # Populate power and base dictionaries
     power_dictionary.update({p: p**k for p in range(10)})
     base_dictionary.update({b: 10**b for b in range(10)})
     good = {} # Create empty dictionary of values that have been explored
@@ -66,29 +67,3 @@ def permutate(string, left, right, p=[]):
             string[left], string[_] = string[_], string[left] # Swap
     return p
 '''
-
-import time
-'''tests for count_ephemeral'''
-s_time = time.time()
-assert count_ephemeral(1, 10, 2) == 2
-print(s_time - time.time())
-
-s_time = time.time()
-assert count_ephemeral(1000, 10000, 3) == 91
-print(s_time - time.time())
-
-s_time = time.time()
-assert count_ephemeral(123456, 654321, 4) == 376
-print(s_time - time.time())
-
-s_time = time.time()
-assert count_ephemeral(1, 10000000, 2) == 1418853
-print(s_time - time.time())
-
-s_time = time.time()
-assert count_ephemeral(1, 10000000, 3) == 167818
-print(s_time - time.time())
-
-s_time = time.time()
-assert count_ephemeral(1, 10000000, 4) == 6727
-print(s_time - time.time())

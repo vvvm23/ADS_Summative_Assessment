@@ -78,28 +78,3 @@ class Stack:
         self.head = Node(data, self.head)
     def top(self):
         return self.head.data
-
-########################################################################################################################
-import time
-s_time = time.time()
-assert good_expression("1+2+3+4")
-assert not good_expression("(1+2+3+4)")
-assert good_expression("(1+2)*3+4")
-assert not good_expression("((1+2))*3+4")
-assert good_expression("1+2*3+4")
-assert not good_expression("1+(2*3)+4")
-assert good_expression("1*2+3+4")
-assert not good_expression("1*2+(3+4)")
-assert good_expression("(2+3)*(4+3*(3*2+34))")
-assert not good_expression("((2+3)*(4+3*(3*2+34)))")
-assert not good_expression("(((2+3)*(4+3*(3*2+34))))")
-assert good_expression("(2+3)*(1+7)*(1+4)*(2+3)*(1+7)*(1+4)*(2+3)*(1+7)*(1+4)*(2+3)*(1+7)*(1+4)*(2+3)*(1+7)*(1+4)*(2+3)*(1+7)*(1+4)")
-assert not good_expression("((2+3)*(1+7)*(1+4)*(2+3)*(1+7)*(1+4)*(2+3)*(1+7)*(1+4)*(2+3)*(1+7)*(1+4)*(2+3)*(1+7)*(1+4)*(2+3)*(1+7)*(1+4))")
-assert good_expression("(3+2)*1")
-assert good_expression("3*2*1")
-assert not good_expression("(3*2*1)")
-assert not good_expression("1+(2*(3+(4*(5+(6*(7+(8*(9+(9+1)))))))))")
-assert good_expression("1*(2+3)*(4+5)*(6+7)")
-t_time = time.time() - s_time
-
-print("all tests passed in", t_time)
