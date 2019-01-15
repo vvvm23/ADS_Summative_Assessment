@@ -76,5 +76,6 @@ count_ephemeral(1, 10000000, 3)
 print(s_time - time.time())
 
 s_time = time.time()
-count_ephemeral(1, 10000000, 4)
-print(s_time - time.time())
+for _ in range(10):
+    count_ephemeral(1, 10000000, 4)
+print((s_time - time.time())/10)
