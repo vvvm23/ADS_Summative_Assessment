@@ -55,7 +55,9 @@ def get_child(n, k):
 
 import time
 s_time = time.time()
+
 print(time.time() - s_time)
+assert count_ephemeral(1, 10, 2) == 2
 s_time = time.time()
 assert count_ephemeral(1000, 10000, 3) == 91
 print(s_time - time.time())

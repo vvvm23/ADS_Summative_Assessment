@@ -69,6 +69,7 @@ def permutate(string, left, right, p=[]):
 '''
 import time
 s_time = time.time()
+assert count_ephemeral(1, 10, 2) == 2
 print(time.time() - s_time)
 s_time = time.time()
 assert count_ephemeral(1000, 10000, 3) == 91
