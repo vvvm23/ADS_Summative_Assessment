@@ -14,7 +14,6 @@ def count_ephemeral(n_1, n_2, k):
             eph = False
             term = False
 
-            #path, eph = r_eph(c, k, good, [c]) # Get path to terminating value and whether c is ephemeral or eternal
             _c = c
             while not term:
                 _c = get_child(_c, k)
@@ -31,8 +30,6 @@ def count_ephemeral(n_1, n_2, k):
                     path.append(_c)
 
             good.update({p: eph for p in path}) # Update dictionary
-
-    print(sum(good[k] == True for k in good.keys() if k >= n_1 and k < n_2))
     return sum(good[k] == True for k in good.keys() if k >= n_1 and k < n_2)
 
 # Recursive function
