@@ -68,25 +68,27 @@ def permutate(string, left, right, p=[]):
     return p
 '''
 import time
+
 s_time = time.time()
-assert count_ephemeral(1, 10, 2) == 2
+count_ephemeral(1, 10, 2)
 print(time.time() - s_time)
+
 s_time = time.time()
-assert count_ephemeral(1000, 10000, 3) == 91
+count_ephemeral(1000, 10000, 3)
 print(s_time - time.time())
 
 s_time = time.time()
-assert count_ephemeral(123456, 654321, 4) == 376
+count_ephemeral(123456, 654321, 4)
 print(s_time - time.time())
 
 s_time = time.time()
-assert count_ephemeral(1, 10000000, 2) == 1418853
+count_ephemeral(1, 10000000, 2)
 print(s_time - time.time())
 
 s_time = time.time()
-assert count_ephemeral(1, 10000000, 3) == 167818
+count_ephemeral(1, 10000000, 3)
 print(s_time - time.time())
 
 s_time = time.time()
-assert count_ephemeral(1, 10000000, 4) == 6727
+count_ephemeral(1, 10000000, 4)
 print(s_time - time.time())
