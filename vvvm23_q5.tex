@@ -31,9 +31,6 @@
 	
 	\underline{e:}\\
 	$T(n) = 0.99T(n/7) + 1/(n^2)$ so $a=0.99$, $b=7$ and $f(n) = 1/(n^2) = n^{-2}$\\
-	Is $n^{-2} = \Omega(n^{\log_7(0.99) + \epsilon})$? [Rule 3]\\
-	Is $n^{-2} \approx \Omega(n^{-0.005 + \epsilon})$? False.\\
-	\\
-	Is $n^{-2} = O(n^{\log_7(0.99) - \epsilon})$? [Rule 1] True.\\
-	$\therefore T(n) = \Theta(n^{log_7(0.99)})$
+	Master Theorem can be applied if $a \geq 1$.\\
+	$a=0.99 \therefore$ Master Theorem cannot be applied.\\
 \end{document}

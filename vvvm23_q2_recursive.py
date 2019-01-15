@@ -10,26 +10,9 @@ def count_ephemeral(n_1, n_2, k):
     while c > n_1: # While candidate is more than min
         c = c - 1 # Decrement candidate
         if not (c in good): # If candidate has already been discovered skip it.
-            path = [c]
-            eph = False
-            term = False
-
-            _c = c
-            while not term:
-                _c = get_child(_c, k)
-                if _c == 1:
-                    eph = True
-                    term = True
-                elif _c in good:
-                    eph = good[_c]
-                    term = True
-                elif _c in path:
-                    eph = False
-                    term = True
-                else:
-                    path.append(_c)
-
+            path, eph = r_eph(c, k, good, [c]) # Get path to terminating value and whether c is ephemeral or eternal
             good.update({p: eph for p in path}) # Update dictionary
+
     return sum(good[k] == True for k in good.keys() if k >= n_1 and k < n_2)
 
 # Recursive function
@@ -53,6 +36,37 @@ def get_child(n, k):
         n = n % base_dictionary[base]
     return total + power_dictionary[n]
 
+'''
+    All permutations of a ephermeral number are also ephermeral. Likewise with eternal numbers.
+    Therfore if we calculate these permutations we do not need to check them in the future.
+    This should theoretically lead to speed up.
+    Although it leads to massive speed up on certain options (approx. 10 second speed up on given tests) 
+    ..leads to slow down on other options (1 to 10**7).
+    Therefore I have commented the related functions out.
+'''
+'''
+# Function to get all permutations of all items in path
+def get_similar(path, max, min):
+    path = list(map(lambda p : list(str(p)), path)) # Convert all integers in path to strings
+    _p = []
+    for p in path: # Iterate through all integers in path
+        _p = permutate(p, 0, len(p) - 1, _p) # Get permutations of current integer
+        _p = [n for n in _p if type(n) == int and n >= min and n < max] # Check if within bounds and remove self-identifying lists from within list
+    return _p
+    
+# Function to get permutations of a string
+def permutate(string, left, right, p=[]):
+    if right == 0: # If one digit integer simply append
+        p.append(int(''.join(string)))
+    elif left == right: # Base case
+        return int(''.join(string))
+    else:
+        for _ in range(left, right + 1):
+            string[left], string[_] = string[_], string[left] # Swap
+            p.append(permutate(string, left + 1, right, p)) # Call permutate recursively and append.
+            string[left], string[_] = string[_], string[left] # Swap
+    return p
+'''
 import time
 
 s_time = time.time()

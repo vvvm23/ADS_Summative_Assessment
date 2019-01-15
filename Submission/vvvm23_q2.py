@@ -31,20 +31,7 @@ def count_ephemeral(n_1, n_2, k):
 
             good.update({p: eph for p in path}) # Update dictionary
     return sum(good[k] == True for k in good.keys() if k >= n_1 and k < n_2)
-
-# Recursive function
-def r_eph(c, k, good, path):
-    _c = get_child(c, k) # Get next integer in sequence
-    if _c == 1: # If child terminates with 1 return path and that c is ephemeral
-        return path, True
-    elif _c in good: # If child has been discovered return path and value in dictionary
-        return path, good[_c]
-    elif _c in path: # If child is in path return path and that c is eternal
-        return path, False
-    else: # If non-terminating append to path and recursively call.
-        path.append(_c)
-        return r_eph(_c, k, good, path)
-
+	
 # Function to get next integer in sequence
 def get_child(n, k):
     total = 0
@@ -52,30 +39,3 @@ def get_child(n, k):
         total += power_dictionary[(n//base_dictionary[base])]
         n = n % base_dictionary[base]
     return total + power_dictionary[n]
-
-import time
-
-s_time = time.time()
-count_ephemeral(1, 10, 2)
-print(time.time() - s_time)
-
-s_time = time.time()
-count_ephemeral(1000, 10000, 3)
-print(s_time - time.time())
-
-s_time = time.time()
-count_ephemeral(123456, 654321, 4)
-print(s_time - time.time())
-
-s_time = time.time()
-count_ephemeral(1, 10000000, 2)
-print(s_time - time.time())
-
-s_time = time.time()
-count_ephemeral(1, 10000000, 3)
-print(s_time - time.time())
-
-s_time = time.time()
-for _ in range(10):
-    count_ephemeral(1, 10000000, 4)
-print((s_time - time.time())/10)
