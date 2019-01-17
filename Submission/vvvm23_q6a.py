@@ -14,7 +14,7 @@ def merge(left, right):
     while len(left) > 0 or len(right) > 0:
         if len(left) > 0 and len(right) > 0:
             count += 1
-            if left[0] <= right[0]:
+            if left[0] >= right[0]:
                 out.append(left[0])
                 left = left[1:]
             else:
@@ -33,7 +33,7 @@ def selection_sort(l):
         elem = l[i]
         pos = i
         for j in range(i+1, len(l)):
-            if l[j] < elem:
+            if l[j] > elem:
                 elem = l[j]
                 pos = j
         
